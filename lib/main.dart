@@ -29,12 +29,13 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    final items = List<String>.generate(10, (i) => "Item $i");
+    final items = List<String>.generate(15, (i) => "Item $i");
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
         ),
         body: ListView.builder(
+            shrinkWrap: true,
             itemBuilder: (context, index) {
               return Card(
                 color: Colors.blue,
@@ -44,23 +45,26 @@ class _MyHomePageState extends State<MyHomePage> {
                     style: TextStyle(color: Colors.white),
                   ),
                   children: [
-                    ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      scrollDirection: Axis.vertical,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          child: ListTile(
-                            title: Text(items[index]),
-                          ),
-                        );
-                      },
-                      itemCount: 10,
+                    Container(
+                      height: 300,
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: ClampingScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        itemBuilder: (context, index) {
+                          return Card(
+                            child: ListTile(
+                              title: Text(items[index]),
+                            ),
+                          );
+                        },
+                        itemCount: 10,
+                      ),
                     )
                   ],
                 ),
               );
             },
-            itemCount: 10));
+            itemCount: 15));
   }
 }
